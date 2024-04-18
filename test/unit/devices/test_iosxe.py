@@ -15,12 +15,21 @@ CFG_BROKEN = """
 
 
 class TestIosxeDevice(unittest.TestCase):
-    
+
     def setUp(self):
-        self.obj = IosxeDeviceHandler({'name': 'iosxe'})
+        self.obj = IosxeDeviceHandler({"name": "iosxe"})
 
     def test_add_additional_operations(self):
-        expected = {'save_config': SaveConfig}
+        expected = {
+            "save_config": SaveConfig,
+            "sync_from": SyncFromRunningToConfD,
+            "current_time": CurrentTime,
+            "is_syncing": IsSyncing,
+            "rollback": Rollback,
+            "checkpoint": Checkpoint,
+            "revert": Revert,
+            "netconf_session_id": NetconfSessionId,
+        }
         self.assertDictEqual(expected, self.obj.add_additional_operations())
 
     def test_add_additional_ssh_connect_params(self):
@@ -31,11 +40,11 @@ class TestIosxeDevice(unittest.TestCase):
         self.assertDictEqual(expected, actual)
 
     def test_csr_unknown_host_cb(self):
-        self.assertTrue(iosxe_unknown_host_cb('host', 'fingerprint'))
+        self.assertTrue(iosxe_unknown_host_cb("host", "fingerprint"))
 
     def test_iosxe_transform_edit_config(self):
         node = new_ele("edit-config")
         node.append(validated_element(CFG_BROKEN, ("config", qualify("config"))))
         node = self.obj.transform_edit_config(node)
-        config_nodes = node.findall('./config')
+        config_nodes = node.findall("./config")
         self.assertTrue(len(config_nodes) == 0)

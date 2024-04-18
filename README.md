@@ -134,13 +134,13 @@ To run the same tests locally as are run via GitHub's CI/CD integration with Tra
 1. Install testing dependencies:
 
     ```
-    pip install nose rednose coverage coveralls mock
+    pip install nose2 coverage coveralls mock
     ```
 
 1. Finally, run the tests:
 
     ```
-    nosetests test --rednose --verbosity=3
+    nose2 test --verbosity=3
     ```
 
 ### Making a Release
