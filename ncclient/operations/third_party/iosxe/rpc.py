@@ -50,6 +50,7 @@ class SyncFromRunningToConfD(RPC):
     """Synchronize the network element's running-configuration to ConfD"""
 
     def request(self, input: dict = {}):
+        """input: sync-defaults, ignore-presrv-paths"""
         node = etree.Element(qualify("sync-from", "http://cisco.com/yang/cisco-ia"))
         return self._request(node)
 
@@ -58,6 +59,7 @@ class Revert(RPC):
     """Cancel the timed rollback and trigger rollback, or modify the timed rollback"""
 
     def request(self, input: dict = {}):
+        """input: now, timer, idle"""
         node = etree.Element(qualify("revert", "http://cisco.com/yang/cisco-ia"))
         return self._request(node)
 
@@ -66,5 +68,6 @@ class Rollback(RPC):
     """Cancel the timed rollback and trigger rollback, or modify the timed rollback"""
 
     def request(self, input: dict = {}):
+        """input: target-url, verbose, nolock, revert-on-error, revert-timer"""
         node = etree.Element(qualify("rollback", "http://cisco.com/yang/cisco-ia"))
         return self._request(node)
